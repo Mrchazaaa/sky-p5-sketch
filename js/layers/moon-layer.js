@@ -1,28 +1,26 @@
-(function () {
-  const { mobileBreakpoint, moon: MOON } = window.SkySketchConstants;
-  const { isImageReady } = window.SkySketchAssets;
+import { isImageReady } from "../assets.js";
+import { SCENE_CONSTANTS } from "../config/scene-constants.js";
 
-  class MoonLayer {
-    constructor(assets) {
-      this.assets = assets;
-    }
+const { mobileBreakpoint, moon: MOON } = SCENE_CONSTANTS;
 
-    draw(context, themeName, width, height) {
-      const image = this.assets.moon[themeName];
-
-      if (!isImageReady(image)) {
-        return;
-      }
-
-      const isMobile = width < mobileBreakpoint;
-      const config = isMobile ? MOON.mobile : MOON.desktop;
-      const size = config.baseSize + width * config.widthScale;
-      const x = width * (1 - config.rightOffsetRatio) - size / 2;
-      const y = height * config.topOffsetRatio;
-
-      context.drawImage(image, x, y, size, size);
-    }
+export class MoonLayer {
+  constructor(assets) {
+    this.assets = assets;
   }
 
-  window.SkySketchMoonLayer = MoonLayer;
-})();
+  draw(context, themeName, width, height) {
+    const image = this.assets.moon[themeName];
+
+    if (!isImageReady(image)) {
+      return;
+    }
+
+    const isMobile = width < mobileBreakpoint;
+    const config = isMobile ? MOON.mobile : MOON.desktop;
+    const size = config.baseSize + width * config.widthScale;
+    const x = width * (1 - config.rightOffsetRatio) - size / 2;
+    const y = height * config.topOffsetRatio;
+
+    context.drawImage(image, x, y, size, size);
+  }
+}

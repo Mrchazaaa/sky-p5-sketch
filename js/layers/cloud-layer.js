@@ -1,15 +1,16 @@
-(function () {
-  const { cloud: CLOUD } = window.SkySketchConstants;
+import { SCENE_CONSTANTS } from "../config/scene-constants.js";
 
-  class Cloud {
-    constructor(sketch, width, height, speed, startRandomly = false) {
-      this.sketch = sketch;
-      this.width = width;
-      this.height = height;
-      this.speed = speed;
-      this.startRandomly = startRandomly;
-      this.initialise();
-    }
+const { cloud: CLOUD } = SCENE_CONSTANTS;
+
+class Cloud {
+  constructor(sketch, width, height, speed, startRandomly = false) {
+    this.sketch = sketch;
+    this.width = width;
+    this.height = height;
+    this.speed = speed;
+    this.startRandomly = startRandomly;
+    this.initialise();
+  }
 
     initialise() {
       this.cloudPoints = [];
@@ -123,13 +124,13 @@
     }
   }
 
-  class CloudLayer {
-    constructor(sketch, width, height) {
-      this.sketch = sketch;
-      this.width = width;
-      this.height = height;
-      this.clouds = Array.from({ length: CLOUD.initialCount }, () => this.createCloud(true));
-    }
+export class CloudLayer {
+  constructor(sketch, width, height) {
+    this.sketch = sketch;
+    this.width = width;
+    this.height = height;
+    this.clouds = Array.from({ length: CLOUD.initialCount }, () => this.createCloud(true));
+  }
 
     createCloud(startRandomly = false) {
       const speed = CLOUD.speeds[Math.floor(Math.random() * CLOUD.speeds.length)];
@@ -158,7 +159,4 @@
         cloud.draw();
       });
     }
-  }
-
-  window.SkySketchCloudLayer = CloudLayer;
-})();
+}
