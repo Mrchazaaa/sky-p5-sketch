@@ -1,24 +1,11 @@
 (function () {
   const themeToggle = document.getElementById("theme-toggle");
-  const celestial = document.querySelector(".scene__celestial");
-  const mountains = document.querySelector(".scene__mountains");
   const sketchRoot = document.getElementById("sketch");
   const themeToggleLabel = document.querySelector(".theme-toggle__label");
 
-  if (!themeToggle || !celestial || !mountains || !sketchRoot || !window.SkyBackground) {
+  if (!themeToggle || !sketchRoot || !window.SkyBackground) {
     return;
   }
-
-  const assets = {
-    light: {
-      moon: "./assets/moon-light.svg",
-      mountains: "./assets/mountains.svg",
-    },
-    dark: {
-      moon: "./assets/moon-dark.webp",
-      mountains: "./assets/mountains-dark.svg",
-    },
-  };
 
   let theme = determineTheme();
 
@@ -36,8 +23,6 @@
 
   function applyTheme(nextTheme) {
     document.documentElement.dataset.theme = nextTheme;
-    celestial.style.backgroundImage = `url(${assets[nextTheme].moon})`;
-    mountains.src = assets[nextTheme].mountains;
     window.SkyBackground.setTheme(nextTheme);
 
     if (themeToggleLabel) {

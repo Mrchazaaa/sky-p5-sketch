@@ -1,4 +1,34 @@
 (function () {
+  const themeConfig = {
+    light: {
+      skyColor: "#b0d0d3",
+      cloudColor: "#ffffff",
+      moonPath: "./assets/moon-light.svg",
+      mountainsPath: "./assets/mountains.svg",
+    },
+    dark: {
+      skyColor: "#18314f",
+      cloudColor: "#a5b0e5",
+      moonPath: "./assets/moon-dark.webp",
+      mountainsPath: "./assets/mountains-dark.svg",
+    },
+  };
+  const mountainsAspectRatio = 1920 / 412.92;
+
+  let currentTheme = "light";
+  const assetImages = {
+    moonLight: createImage(themeConfig.light.moonPath),
+    moonDark: createImage(themeConfig.dark.moonPath),
+    mountainsLight: createImage(themeConfig.light.mountainsPath),
+    mountainsDark: createImage(themeConfig.dark.mountainsPath),
+  };
+
+  function createImage(src) {
+    const image = new Image();
+    image.src = src;
+    return image;
+  }
+
   class Cloud {
     constructor(sketch, newWidth, newHeight, speed, startRandomly = false) {
       this.sketch = sketch;
@@ -119,12 +149,11 @@
     }
   }
 
-  let cloudColor = "#fff";
-
-  function clouds(sketch, mountNode) {
+  function sceneSketch(sketch, mountNode) {
     let width;
     let height;
     let cloudList = [];
+
     const cloudSpeeds = [12, 13, 15];
     const initialCloudCount = 4;
     const cloudCountLimit = 15;
@@ -150,14 +179,20 @@
     };
 
     sketch.draw = function () {
+      const theme = themeConfig[currentTheme];
+      const context = sketch.drawingContext;
+
       if (cloudList.length < cloudCountLimit && Math.random() < cloudCreationSuccessRate) {
         const speed = cloudSpeeds[Math.floor(Math.random() * cloudSpeeds.length)];
         cloudList.push(new Cloud(sketch, width, height, speed));
       }
 
-      sketch.clear();
+      sketch.background(theme.skyColor);
+      drawMountains(context);
+      drawMoon(context);
+
       sketch.noStroke();
-      sketch.fill(cloudColor);
+      sketch.fill(theme.cloudColor);
 
       cloudList.forEach((cloud) => {
         cloud.move();
@@ -175,10 +210,36 @@
         cloud.updateSize(width, height);
       });
     };
+
+    function drawMoon(context) {
+      const moonImage = currentTheme === "dark" ? assetImages.moonDark : assetImages.moonLight;
+      const moonSize = width < 768 ? 80 + width * 0.03 : 100 + width * 0.05;
+      const moonX = width < 768 ? width * 0.9 - moonSize : width * 0.7 - moonSize / 2;
+      const moonY = height * (width < 768 ? 0.05 : 0.1);
+
+      if (moonImage.complete && moonImage.naturalWidth > 0) {
+        context.drawImage(moonImage, moonX, moonY, moonSize, moonSize);
+      }
+    }
+
+    function drawMountains(context) {
+      const mountainsImage =
+        currentTheme === "dark" ? assetImages.mountainsDark : assetImages.mountainsLight;
+
+      if (mountainsImage.complete && mountainsImage.naturalWidth > 0) {
+        const drawWidth = width;
+        const drawHeight = drawWidth / mountainsAspectRatio;
+        const drawY = height - drawHeight;
+
+        context.drawImage(mountainsImage, 0, drawY, drawWidth, drawHeight);
+      }
+    }
   }
 
   function setTheme(theme) {
-    cloudColor = theme === "dark" ? "#a5b0e5" : "#fff";
+    if (themeConfig[theme]) {
+      currentTheme = theme;
+    }
   }
 
   function cloudsSketch(mountNode) {
@@ -189,7 +250,7 @@
       configurable: true,
     });
 
-    const p5Instance = new window.p5((sketch) => clouds(sketch, mountNode), mountNode);
+    const p5Instance = new window.p5((sketch) => sceneSketch(sketch, mountNode), mountNode);
 
     if (originalReadyState) {
       Object.defineProperty(document, "readyState", originalReadyState);
