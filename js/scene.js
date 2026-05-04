@@ -3,6 +3,7 @@ import { themeConfig } from "./config/theme.js";
 import { CloudLayer } from "./layers/cloud-layer.js";
 import { MoonLayer } from "./layers/moon-layer.js";
 import { MountainLayer } from "./layers/mountain-layer.js";
+import { StarLayer } from "./layers/star-layer.js";
 
 export class Scene {
   constructor(sketch, mountNode, initialTheme) {
@@ -13,6 +14,7 @@ export class Scene {
     this.width = 0;
     this.height = 0;
     this.cloudLayer = null;
+    this.starLayer = null;
     this.moonLayer = new MoonLayer(this.assets);
     this.mountainLayer = new MountainLayer(this.assets);
   }
@@ -21,6 +23,7 @@ export class Scene {
     this.width = this.mountNode.clientWidth;
     this.height = this.mountNode.clientHeight;
     this.sketch.createCanvas(this.width, this.height);
+    this.starLayer = new StarLayer(this.sketch, this.width, this.height);
     this.cloudLayer = new CloudLayer(this.sketch, this.width, this.height);
   }
 
@@ -28,6 +31,10 @@ export class Scene {
     this.width = this.mountNode.clientWidth;
     this.height = this.mountNode.clientHeight;
     this.sketch.resizeCanvas(this.width, this.height);
+
+    if (this.starLayer) {
+      this.starLayer.resize(this.width, this.height);
+    }
 
     if (this.cloudLayer) {
       this.cloudLayer.resize(this.width, this.height);
@@ -45,6 +52,11 @@ export class Scene {
     const context = this.sketch.drawingContext;
 
     this.sketch.background(theme.skyColor);
+
+    if (this.themeName === "dark" && this.starLayer) {
+      this.starLayer.draw();
+    }
+
     this.mountainLayer.draw(context, this.themeName, this.width, this.height);
     this.moonLayer.draw(context, this.themeName, this.width, this.height);
 

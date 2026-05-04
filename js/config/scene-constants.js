@@ -1,5 +1,22 @@
 export const SCENE_CONSTANTS = {
   mobileBreakpoint: 768,
+  star: {
+    density: 0.00007,
+    minCount: 28,
+    maxCount: 64,
+    maxYRatio: 0.72,
+    minSize: 1.2,
+    maxSize: 2.8,
+    minBaseAlpha: 0.28,
+    maxBaseAlpha: 0.62,
+    minTwinkleRange: 0.14,
+    maxTwinkleRange: 0.34,
+    minTwinkleSpeed: 0.8,
+    maxTwinkleSpeed: 1.8,
+    minPulseScale: 0.92,
+    maxPulseScale: 1.22,
+    moonAvoidanceRadius: 90,
+  },
   cloud: {
     maxPoints: 8,
     minPoints: 4,
