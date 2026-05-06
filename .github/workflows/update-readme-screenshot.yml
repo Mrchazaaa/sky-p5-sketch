@@ -1,0 +1,42 @@
+name: Update README Screenshot
+
+on:
+  workflow_dispatch:
+  push:
+    # branches:
+    #   - *
+    paths:
+      - "index.html"
+      - "styles.css"
+      - "js/**"
+      - "assets/**"
+      - "launch.sh"
+      - ".github/workflows/update-readme-screenshot.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-readme-screenshot-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  update-readme-screenshot:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Start local preview server
+        run: ./launch.sh 8000 > /tmp/sky-p5-sketch-server.log 2>&1 &
+
+      - name: Update README screenshot
+        uses: Mrchazaaa/update-screenshots-action@v1.2.0
+        with:
+          url: http://127.0.0.1:8000/
+          image_path: assets/screenshots/home.png
+          navigation_retries: 5
+          navigation_retry_delay_ms: 1000
