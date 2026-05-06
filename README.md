@@ -3,7 +3,7 @@ A static sky scene with procedurally generated p5.js clouds, layered mountains a
 ## README Screenshot
 
 <!-- screenshot:start -->
-![Project screenshot](assets/screenshots/home.png)
+![Project screenshot](assets/screenshots/home.gif)
 <!-- screenshot:end -->
 
 ## Previews

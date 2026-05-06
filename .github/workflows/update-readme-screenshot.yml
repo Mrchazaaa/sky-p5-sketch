@@ -10,6 +10,7 @@ on:
       - "styles.css"
       - "js/**"
       - "assets/**"
+      - "!assets/screenshots/**"
       - "launch.sh"
       - ".github/workflows/update-readme-screenshot.yml"
 
@@ -34,9 +35,11 @@ jobs:
         run: ./launch.sh 8000 > /tmp/sky-p5-sketch-server.log 2>&1 &
 
       - name: Update README screenshot
-        uses: Mrchazaaa/update-screenshots-action@v1.2.0
+        uses: Mrchazaaa/update-screenshots-action@v0.1.0
         with:
           url: http://127.0.0.1:8000/
-          image_path: assets/screenshots/home.png
+          image_path: assets/screenshots/home.gif
+          capture_format: gif
+          gif_duration_ms: 10000
           navigation_retries: 5
           navigation_retry_delay_ms: 1000
