@@ -49,9 +49,9 @@ jobs:
           navigation_retries: 5
           navigation_retry_delay_ms: 1000
           commit_changes: true
-          commit_message: chore: update README screenshot
-          commit_author_name: github-actions[bot]
-          commit_author_email: 41898282+github-actions[bot]@users.noreply.github.com
+          commit_message: "chore: update README screenshot"
+          commit_author_name: "github-actions[bot]"
+          commit_author_email: "41898282+github-actions[bot]@users.noreply.github.com"
 
       - name: Update dark preview
         uses: Mrchazaaa/update-screenshots-action@v0.5.0
@@ -69,6 +69,6 @@ jobs:
           navigation_retries: 5
           navigation_retry_delay_ms: 1000
           commit_changes: true
-          commit_message: chore: update README screenshot
-          commit_author_name: github-actions[bot]
-          commit_author_email: 41898282+github-actions[bot]@users.noreply.github.com
+          commit_message: "chore: update README screenshot"
+          commit_author_name: "github-actions[bot]"
+          commit_author_email: "41898282+github-actions[bot]@users.noreply.github.com"
