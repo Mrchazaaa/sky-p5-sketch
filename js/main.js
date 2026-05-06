@@ -18,8 +18,24 @@ themeToggle.addEventListener("click", () => {
 });
 
 function determineTheme() {
+  const themeFromUrl = getThemeFromUrl();
+  if (themeFromUrl) {
+    return themeFromUrl;
+  }
+
   const hour = new Date().getHours();
   return hour >= 18 || hour < 6 ? "dark" : "light";
+}
+
+function getThemeFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  const requestedTheme = params.get("theme");
+
+  if (requestedTheme === "light" || requestedTheme === "dark") {
+    return requestedTheme;
+  }
+
+  return null;
 }
 
 function applyTheme(nextTheme) {

@@ -1,4 +1,4 @@
-name: Update README Screenshot
+name: Update README Previews
 
 on:
   workflow_dispatch:
@@ -18,11 +18,11 @@ permissions:
   contents: write
 
 concurrency:
-  group: update-readme-screenshot-${{ github.ref }}
+  group: update-readme-previews-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  update-readme-screenshot:
+  update-readme-previews:
     runs-on: ubuntu-latest
 
     steps:
@@ -34,11 +34,23 @@ jobs:
       - name: Start local preview server
         run: ./launch.sh 8000 > /tmp/sky-p5-sketch-server.log 2>&1 &
 
-      - name: Update README screenshot
-        uses: Mrchazaaa/update-screenshots-action@v0.1.0
+      - name: Update light preview
+        uses: Mrchazaaa/update-screenshots-action@v0.2.0
         with:
-          url: http://127.0.0.1:8000/
-          image_path: assets/screenshots/home.gif
+          url: http://127.0.0.1:8000/?theme=light
+          image_path: assets/screenshots/light.gif
+          marker_name: light-preview
+          capture_format: gif
+          gif_duration_ms: 10000
+          navigation_retries: 5
+          navigation_retry_delay_ms: 1000
+
+      - name: Update dark preview
+        uses: Mrchazaaa/update-screenshots-action@v0.2.0
+        with:
+          url: http://127.0.0.1:8000/?theme=dark
+          image_path: assets/screenshots/dark.gif
+          marker_name: dark-preview
           capture_format: gif
           gif_duration_ms: 10000
           navigation_retries: 5
