@@ -34,7 +34,7 @@ jobs:
         run: ./launch.sh 8000 > /tmp/sky-p5-sketch-server.log 2>&1 &
 
       - name: Update light preview
-        uses: Mrchazaaa/update-screenshots-action@v0.5.0
+        uses: Mrchazaaa/update-screenshots-action@v0.5.1
         with:
           url: http://127.0.0.1:8000/?theme=light
           image_path: assets/screenshots/light.gif
@@ -54,7 +54,7 @@ jobs:
           commit_author_email: "41898282+github-actions[bot]@users.noreply.github.com"
 
       - name: Update dark preview
-        uses: Mrchazaaa/update-screenshots-action@v0.5.0
+        uses: Mrchazaaa/update-screenshots-action@v0.5.1
         with:
           url: http://127.0.0.1:8000/?theme=dark
           image_path: assets/screenshots/dark.gif
