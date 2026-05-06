@@ -40,7 +40,7 @@ jobs:
           image_path: assets/screenshots/light.gif
           marker_name: light-preview
           capture_format: gif
-          gif_duration_ms: 10000
+          gif_duration_ms: 5000
           readme_path: README.md
           viewport_width: 1440
           viewport_height: 900
@@ -60,7 +60,7 @@ jobs:
           image_path: assets/screenshots/dark.gif
           marker_name: dark-preview
           capture_format: gif
-          gif_duration_ms: 10000
+          gif_duration_ms: 5000
           readme_path: README.md
           viewport_width: 1440
           viewport_height: 900
