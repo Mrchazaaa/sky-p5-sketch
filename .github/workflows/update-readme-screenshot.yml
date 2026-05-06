@@ -1,0 +1,74 @@
+name: Update README Previews
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "index.html"
+      - "styles.css"
+      - "js/**"
+      - "assets/**"
+      - "!assets/screenshots/**"
+      - "launch.sh"
+      - ".github/workflows/update-readme-screenshot.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-readme-previews-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  update-readme-previews:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Start local preview server
+        run: ./launch.sh 8000 > /tmp/sky-p5-sketch-server.log 2>&1 &
+
+      - name: Update light preview
+        uses: Mrchazaaa/update-screenshots-action@v1
+        with:
+          url: http://127.0.0.1:8000/?theme=light
+          capture_path: assets/screenshots/light.gif
+          marker_name: light-preview
+          capture_format: gif
+          gif_duration_ms: 5000
+          markdown_path: README.md
+          viewport_width: 1440
+          viewport_height: 900
+          wait_until: networkidle
+          delay_ms: 0
+          navigation_retries: 5
+          navigation_retry_delay_ms: 1000
+          commit_changes: true
+          commit_message: "chore: update README screenshot"
+          commit_author_name: "github-actions[bot]"
+          commit_author_email: "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Update dark preview
+        uses: Mrchazaaa/update-screenshots-action@v1
+        with:
+          url: http://127.0.0.1:8000/?theme=dark
+          capture_path: assets/screenshots/dark.gif
+          marker_name: dark-preview
+          capture_format: gif
+          gif_duration_ms: 5000
+          markdown_path: README.md
+          viewport_width: 1440
+          viewport_height: 900
+          wait_until: networkidle
+          delay_ms: 0
+          navigation_retries: 5
+          navigation_retry_delay_ms: 1000
+          commit_changes: true
+          commit_message: "chore: update README screenshot"
+          commit_author_name: "github-actions[bot]"
+          commit_author_email: "41898282+github-actions[bot]@users.noreply.github.com"

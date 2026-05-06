@@ -1,14 +1,17 @@
 A static sky scene with procedurally generated p5.js clouds, layered mountains and light/dark theme.
 
 ## Previews
-
 ### Light
 
-![Light preview](./light.gif)
+<!-- light-preview:start -->
+![Project screenshot](assets/screenshots/light.gif)
+<!-- light-preview:end -->
 
 ### Dark
 
-![Dark preview](./dark.gif)
+<!-- dark-preview:start -->
+![Project screenshot](assets/screenshots/dark.gif)
+<!-- dark-preview:end -->
 
 ## Technology Stack
 
