@@ -35,7 +35,7 @@ jobs:
         run: ./launch.sh 8000 > /tmp/sky-p5-sketch-server.log 2>&1 &
 
       - name: Update light preview
-        uses: Mrchazaaa/update-screenshots-action@v0.2.0
+        uses: Mrchazaaa/update-screenshots-action@v0.3.0
         with:
           url: http://127.0.0.1:8000/?theme=light
           image_path: assets/screenshots/light.gif
@@ -44,9 +44,10 @@ jobs:
           gif_duration_ms: 10000
           navigation_retries: 5
           navigation_retry_delay_ms: 1000
+          push: false
 
       - name: Update dark preview
-        uses: Mrchazaaa/update-screenshots-action@v0.2.0
+        uses: Mrchazaaa/update-screenshots-action@v0.3.0
         with:
           url: http://127.0.0.1:8000/?theme=dark
           image_path: assets/screenshots/dark.gif
