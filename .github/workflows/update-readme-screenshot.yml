@@ -3,8 +3,6 @@ name: Update README Previews
 on:
   workflow_dispatch:
   push:
-    # branches:
-    #   - *
     paths:
       - "index.html"
       - "styles.css"
